@@ -1,17 +1,26 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import ReactDOM from "react-dom"
+import * as React from "react"
+import AppProvider from "./app-provider"
+import {useUser} from "./domain/user/user-provider"
 
 ReactDOM.render(
-  <React.StrictMode>
+  <AppProvider>
     <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+  </AppProvider>,
+  document.getElementById("root")
+)
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+function App() {
+  const {user} = useUser()
+
+  const AuthenticatedApp = React.lazy(() => import("./app/authenticated-app"))
+  const UnauthenticatedApp = React.lazy(
+    () => import("./app/unauthenticated-app")
+  )
+
+  return (
+    <React.Suspense fallback={<div>full page spinner</div>}>
+      {user.email ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+    </React.Suspense>
+  )
+}
