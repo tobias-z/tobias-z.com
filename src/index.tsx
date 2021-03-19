@@ -1,5 +1,7 @@
 import ReactDOM from "react-dom"
 import * as React from "react"
+import "./scss/compiled/index.min.css"
+import "./scss/compiled/layout.min.css"
 import AppProvider from "./app-provider"
 import {useUser} from "./domain/user/user-provider"
 

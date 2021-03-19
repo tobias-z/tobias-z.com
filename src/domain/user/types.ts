@@ -11,7 +11,7 @@ type RegisterProps = {
   lastName: string
 }
 type AuthCalls = {
-  login: (credentials: LoginProps) => Promise<void>
+  login: (credentials: LoginProps) => Promise<UserInfo | null>
   register: (userInfo: RegisterProps) => Promise<void>
   logout: () => void
 }

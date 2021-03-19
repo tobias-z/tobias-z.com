@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=Roboto&display=swap");
+
+$navbar: rgb(112, 71, 247);
+
+* {
+  // font-family: "PT Sans", sans-serif;
+  // font-family: Arial, Helvetica, sans-serif;
+  font-family: "Roboto", sans-serif;
+}
+
+.btn {
+  border-radius: 0px;
+}
+
+.navbar {
+  background-color: $navbar;
+  height: 80px;
+  font-size: 18px;
+
+  .brand {
+    font-size: 21px;
+  }
+
+  @media (min-width: 768px) {
+    .navcontainer {
+      width: 750px;
+    }
+  }
+}

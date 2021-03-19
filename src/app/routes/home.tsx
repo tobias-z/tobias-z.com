@@ -1,7 +1,14 @@
 import * as React from "react"
+import {Button, Container, Row} from "react-bootstrap"
 
 function Home() {
-  return <div>Welcome to my page 🙂</div>
+  return (
+    <Container>
+      <Row>
+        <Button block>Hello</Button>Welcome to my page 🙂
+      </Row>
+    </Container>
+  )
 }
 
 export default Home

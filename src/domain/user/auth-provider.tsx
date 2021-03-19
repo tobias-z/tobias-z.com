@@ -8,14 +8,13 @@ const AuthContext = React.createContext<AuthCalls | undefined>(undefined)
 function AuthProvider({children}: any) {
   const {setUser} = useUser()
 
-  const login = React.useCallback(
-    async (credentials: LoginProps) => {
-      // Do db call to login user
-      const foundUser = users.find(u => u.email === credentials.email)
-      if (foundUser) setUser(foundUser)
-    },
-    [setUser]
-  )
+  const login = React.useCallback(async (credentials: LoginProps) => {
+    // Do db call to login user
+    const foundUsers = await users()
+    const user = foundUsers.find((u: any) => u.email === credentials.email)
+    if (user) return user
+    return null
+  }, [])
 
   const register = React.useCallback(async (userInfo: RegisterProps) => {
     // Do db call to register the user
