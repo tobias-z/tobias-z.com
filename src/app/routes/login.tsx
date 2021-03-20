@@ -9,6 +9,7 @@ import CenteredContainer from "../../components/centered-container"
 import OutlinedContainer from "../../components/outlined-container"
 import * as yup from "yup"
 import {Link} from "react-router-dom"
+import {Helmet} from "react-helmet"
 
 function Login() {
   const {login} = useAuth()
@@ -27,6 +28,11 @@ function Login() {
 
   return (
     <CenteredContainer>
+      <Helmet>
+        <title>Login | Tobias Zimmermann</title>
+        <meta property="og:title" content="Login | Tobias Zimmermann" />
+        <meta property="og:description" content="Login page of tobias-z.com" />
+      </Helmet>
       <Formik
         initialValues={{email: "", password: ""}}
         validationSchema={validationSchema}

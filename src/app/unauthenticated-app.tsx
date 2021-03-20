@@ -5,6 +5,7 @@ import Login from "./routes/login"
 import Footer from "../components/footer"
 import UnknownRoute from "./routes/404"
 import Layout from "./layout"
+import Blog from "./routes/blog"
 
 function UnauthenticatedApp() {
   return (
@@ -17,6 +18,11 @@ function UnauthenticatedApp() {
         </Route>
         <Route path="/login">
           <Layout element={<Login />} />
+        </Route>
+        <Route path="/blog">
+          <Header />
+          <Layout element={<Blog />} />
+          <Footer />
         </Route>
         <Route path="/">
           <Header />

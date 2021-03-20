@@ -1,6 +1,7 @@
 import * as React from "react"
 import {Button, Col, Container, Form, Row} from "react-bootstrap"
 import MDEditor from "@uiw/react-md-editor"
+import {Helmet} from "react-helmet"
 
 function CreateBlog() {
   const [title, setTitle] = React.useState("")
@@ -9,6 +10,11 @@ function CreateBlog() {
 
   return (
     <Container>
+      <Helmet>
+        <title>Create Blog | Tobias Zimmermann</title>
+        <meta property="og:title" content="Create Blog | Tobias Zimmermann" />
+        <meta property="og:description" content="Create a blog" />
+      </Helmet>
       <Row>
         <Col>
           <Form.Group controlId="blog-title">

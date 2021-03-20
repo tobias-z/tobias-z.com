@@ -2,6 +2,7 @@ import * as React from "react"
 import {Button, Col, Container, Form, Row} from "react-bootstrap"
 import {useHistory} from "react-router"
 import {useUser} from "../../domain/user/user-provider"
+import {Helmet} from "react-helmet"
 
 function Blog() {
   const history = useHistory()
@@ -18,6 +19,11 @@ function Blog() {
 
   return (
     <Container>
+      <Helmet>
+        <title>Blog | Tobias Zimmermann</title>
+        <meta property="og:title" content="Blog | Tobias Zimmermann" />
+        <meta property="og:description" content="Tobias Zimmermann's blogs" />
+      </Helmet>
       <Row>
         <Col md="6" className="m-auto">
           <Form.Group controlId="search-blogs">

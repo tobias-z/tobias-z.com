@@ -22,7 +22,7 @@ function AuthenticatedHeader() {
             <NavLink exact className="nav-link" to="/">
               Home
             </NavLink>
-            <NavLink exact className="nav-link" to="/blog">
+            <NavLink className="nav-link" to="/blog">
               Blog
             </NavLink>
             <Nav.Link onClick={() => logout()}>Logout</Nav.Link>

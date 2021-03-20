@@ -1,8 +1,14 @@
 import {Container, Row} from "react-bootstrap"
+import {Helmet} from "react-helmet"
 
 function UnknownRoute() {
   return (
     <Container>
+      <Helmet>
+        <title>404 | Tobias Zimmermann</title>
+        <meta property="og:title" content="404 | Tobias Zimmermann" />
+        <meta property="og:description" content="Page was not found" />
+      </Helmet>
       <Row
         className="d-flex justify-content-center align-items-center"
         style={{minHeight: "80vh"}}>
