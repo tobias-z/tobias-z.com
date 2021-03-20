@@ -1,9 +1,8 @@
-import * as React from "react"
 import {Container} from "react-bootstrap"
 
 function Footer() {
   return (
-    <footer className="m-4">
+    <footer className="mt-4">
       <Container>
         <div>Hello people</div>
         <div>This is a footer</div>

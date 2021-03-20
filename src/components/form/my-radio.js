@@ -1,6 +1,5 @@
-import { useField } from "formik"
-import React from "react"
-import { Form } from "react-bootstrap"
+import {useField} from "formik"
+import {Form} from "react-bootstrap"
 
 function MyRadio(props) {
   const [field, meta] = useField(props)

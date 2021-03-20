@@ -2,8 +2,8 @@ import {useField} from "formik"
 import {Form, FormControl} from "react-bootstrap"
 
 type InputProps = {
-  label: string
   name: string
+  label?: string
   text?: string
   placeholder?: string
   type?: "email" | "password" | "text" | "number" | "search"

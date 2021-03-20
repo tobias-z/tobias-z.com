@@ -1,5 +1,5 @@
 import * as React from "react"
-import {Button, Col, Row} from "react-bootstrap"
+import {Button} from "react-bootstrap"
 import {useHistory} from "react-router"
 import {useAuth} from "../../domain/user/auth-provider"
 import {useUser} from "../../domain/user/user-provider"
