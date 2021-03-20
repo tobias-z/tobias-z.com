@@ -21,6 +21,10 @@ function Login() {
     password: yup.string().required().min(10),
   })
 
+  React.useEffect(() => {
+    return () => history.push("/")
+  }, [history])
+
   return (
     <CenteredContainer>
       <Formik
@@ -31,7 +35,6 @@ function Login() {
           setSubmitting(true)
           const user = await login(values)
           if (user) {
-            history.push("/")
             setUser(user)
           } else {
             setErrorMessage("Incorrect login... Please try again")
