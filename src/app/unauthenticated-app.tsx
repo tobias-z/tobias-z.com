@@ -1,35 +1,30 @@
-import * as React from "react"
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
 import Header from "../components/unauthenticated/header"
 import Home from "./routes/home"
 import Login from "./routes/login"
 import Footer from "../components/footer"
-import {Container} from "react-bootstrap"
 import UnknownRoute from "./routes/404"
+import Layout from "./layout"
 
 function UnauthenticatedApp() {
   return (
-    <>
-      <Router>
-        <Header />
-        <main>
-          <Container>
-            <AppRoutes />
-          </Container>
-        </main>
-        <Footer />
-      </Router>
-    </>
-  )
-}
-
-function AppRoutes() {
-  return (
-    <Switch>
-      <Route exact path="/" component={Home} />
-      <Route path="/login" component={Login} />
-      <Route path="/" component={UnknownRoute} />
-    </Switch>
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <Header />
+          <Layout element={<Home />} />
+          <Footer />
+        </Route>
+        <Route path="/login">
+          <Layout element={<Login />} />
+        </Route>
+        <Route path="/">
+          <Header />
+          <Layout element={<UnknownRoute />} />
+          <Footer />
+        </Route>
+      </Switch>
+    </Router>
   )
 }
 

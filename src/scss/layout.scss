@@ -1,11 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=Roboto&display=swap");
 
 $navbar: rgb(112, 71, 247);
+$primary: #234d7b;
+$secondary: #3b3c3e;
+$success: #1e6111;
+$info: #64c3d2;
+$warning: #f5e74a;
+$danger: #820410;
 
 * {
   // font-family: "PT Sans", sans-serif;
   // font-family: Arial, Helvetica, sans-serif;
-  font-family: "Roboto", sans-serif;
+  line-height: 1.6 !important;
+  font-family: "Roboto", sans-serif !important;
 }
 
 .btn {
@@ -14,7 +21,6 @@ $navbar: rgb(112, 71, 247);
 
 .navbar {
   background-color: $navbar;
-  height: 80px;
   font-size: 18px;
 
   .brand {
@@ -26,4 +32,29 @@ $navbar: rgb(112, 71, 247);
       width: 750px;
     }
   }
+}
+
+.form-control {
+  border-radius: 3px;
+}
+
+.invalid-feedback {
+  color: $danger;
+}
+
+.is-invalid {
+  border: 1px solid $danger !important;
+}
+
+.profile-picture {
+  width: auto;
+  height: 50px;
+  border-radius: 100%;
+}
+
+.outlined-container {
+  -webkit-box-shadow: 0 8px 6px -6px #6d6d6d;
+  -moz-box-shadow: 0 8px 6px -6px #6d6d6d;
+  box-shadow: 0 8px 20px -6px #6d6d6d;
+  border-radius: 5px;
 }

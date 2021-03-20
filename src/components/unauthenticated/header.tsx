@@ -1,10 +1,16 @@
 import {Navbar, Nav, Container} from "react-bootstrap"
 import {NavLink} from "react-router-dom"
+import profile from "../../images/profile-picture-small.jpg"
 
 function UnAuthenticatedHeader() {
   return (
-    <Navbar className="mb-4 " collapseOnSelect expand="md" variant="dark">
+    <Navbar className="mb-5 p-4" collapseOnSelect expand="md" variant="dark">
       <Container className="navcontainer">
+        <img
+          src={profile}
+          className="profile-picture mr-2"
+          alt="Profile of me"
+        />
         <NavLink to="/">
           <Navbar.Brand className="brand">Tobias Zimmermann</Navbar.Brand>
         </NavLink>
