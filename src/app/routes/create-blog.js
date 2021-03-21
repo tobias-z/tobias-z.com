@@ -2,6 +2,8 @@ import * as React from "react"
 import {Button, Col, Container, Form, Row} from "react-bootstrap"
 import MDEditor from "@uiw/react-md-editor"
 import {Helmet} from "react-helmet"
+import {fetchRandomData} from "../../api/utils"
+import {blogURL} from "../../api/blog"
 
 function CreateBlog() {
   const [title, setTitle] = React.useState("")
@@ -44,15 +46,17 @@ function CreateBlog() {
         <Col className="d-flex justify-content-end">
           <Button
             className="w-25 p-2"
-            onClick={() => {
+            onClick={async () => {
               // Do post with blog + title
               // Title has to be unique
               const requestBody = {
                 title,
                 description,
-                blog,
+                body: blog,
               }
-              console.log(requestBody)
+              fetchRandomData(blogURL.base, "POST", requestBody)
+                .then(data => console.log(data))
+                .catch(err => console.error(err))
             }}>
             Create Blog
           </Button>

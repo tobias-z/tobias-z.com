@@ -3,19 +3,55 @@ import {Button, Col, Container, Form, Row} from "react-bootstrap"
 import {useHistory} from "react-router"
 import {useUser} from "../../domain/user/user-provider"
 import {Helmet} from "react-helmet"
+import {fetchRandomData} from "../../api/utils"
+import {blogURL} from "../../api/blog"
+import type {BlogType} from "./types"
+import BlogCard from "../../components/blog-card"
 
-function Blog() {
+type BlogData = {
+  all: Array<BlogType>
+}
+
+function BlogFinder() {
   const history = useHistory()
   const {user} = useUser()
   const [search, setSearch] = React.useState("")
+  const [blogs, setBlogs] = React.useState<Array<BlogType>>([])
+  const [loadingBlogs, setLoadingBlogs] = React.useState(false)
 
   React.useEffect(() => {
     // fetch with react query
+    setLoadingBlogs(true)
+    fetchRandomData(blogURL.base, "GET")
+      .then((data: BlogData) => {
+        setBlogs(data.all)
+        setLoadingBlogs(false)
+      })
+      .catch(err => {
+        console.error(err)
+        setLoadingBlogs(false)
+      })
   }, [])
 
   React.useEffect(() => {
     // do search stuff
   }, [search])
+
+  function displayBlogs() {
+    if (loadingBlogs) {
+      return <h3 className="text-center">Loading blogs...</h3>
+    } else {
+      return (
+        <>
+          {blogs.map(blog => (
+            <Col md="3" key={blog.id}>
+              <BlogCard blog={blog} />
+            </Col>
+          ))}
+        </>
+      )
+    }
+  }
 
   return (
     <Container>
@@ -45,8 +81,9 @@ function Blog() {
           )}
         </Col>
       </Row>
+      <Row className="mt-3">{displayBlogs()}</Row>
     </Container>
   )
 }
 
-export default Blog
+export default BlogFinder
