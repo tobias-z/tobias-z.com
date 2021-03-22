@@ -1,5 +1,5 @@
 import * as React from "react"
-import {Button} from "react-bootstrap"
+import {Button, Spinner} from "react-bootstrap"
 import {useHistory} from "react-router"
 import {useAuth} from "../../domain/user/auth-provider"
 import {useUser} from "../../domain/user/user-provider"
@@ -69,7 +69,13 @@ function Login() {
                 placeholder="·············"
               />
               <Button block disabled={isSubmitting} type="submit">
-                Submit
+                {isSubmitting ? (
+                  <>
+                    <Spinner animation="border" /> Loading...
+                  </>
+                ) : (
+                  "Login"
+                )}
               </Button>
               <Link to="/">
                 <p className="pt-2 text-secondary">↩ back to home</p>

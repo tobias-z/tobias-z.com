@@ -58,3 +58,9 @@ $danger: #820410;
   box-shadow: 0 8px 20px -6px #6d6d6d;
   border-radius: 5px;
 }
+
+@media (min-width: 768px) {
+  .small-container {
+    width: 750px;
+  }
+}

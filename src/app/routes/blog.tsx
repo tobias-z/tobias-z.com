@@ -3,65 +3,60 @@ import {Button, Col, Container, Form, Row} from "react-bootstrap"
 import {useHistory} from "react-router"
 import {useUser} from "../../domain/user/user-provider"
 import {Helmet} from "react-helmet"
-import {fetchRandomData} from "../../api/utils"
-import {blogURL} from "../../api/blog"
-import type {BlogType} from "./types"
 import BlogCard from "../../components/blog-card"
-
-type BlogData = {
-  all: Array<BlogType>
-}
+import useBlogs from "../../api/useBlogs"
+import SmallContainer from "../../components/small-container"
+import {BlogType} from "./types"
 
 function BlogFinder() {
   const history = useHistory()
   const {user} = useUser()
   const [search, setSearch] = React.useState("")
-  const [blogs, setBlogs] = React.useState<Array<BlogType>>([])
-  const [loadingBlogs, setLoadingBlogs] = React.useState(false)
+  const [blogsToShow, setBlogsToShow] = React.useState<Array<BlogType>>([])
+  const {data, status, error} = useBlogs()
 
   React.useEffect(() => {
-    // fetch with react query
-    setLoadingBlogs(true)
-    fetchRandomData(blogURL.base, "GET")
-      .then((data: BlogData) => {
-        setBlogs(data.all)
-        setLoadingBlogs(false)
-      })
-      .catch(err => {
-        console.error(err)
-        setLoadingBlogs(false)
-      })
-  }, [])
-
-  React.useEffect(() => {
-    // do search stuff
-  }, [search])
+    if (!search || !data) return
+    setBlogsToShow(
+      data.filter(blog => blog.title.toLowerCase().includes(search))
+    )
+  }, [data, search])
 
   function displayBlogs() {
-    if (loadingBlogs) {
-      return <h3 className="text-center">Loading blogs...</h3>
-    } else {
-      return (
-        <>
-          {blogs.map(blog => (
-            <Col md="3" key={blog.id}>
-              <BlogCard blog={blog} />
-            </Col>
-          ))}
-        </>
-      )
+    switch (status) {
+      case "idle":
+        return <div>Idle</div>
+      case "loading":
+        return <h3 className="text-center">Loading blogs...</h3>
+      case "error":
+        return <h3>Error: {error}</h3>
+      case "success":
+        console.log(data)
+        if (!data) return <div>No blogs found</div>
+        const arrayToMap = search ? blogsToShow : data
+        return (
+          <>
+            {arrayToMap.map(blog => (
+              <Col md="6" key={blog.id} className="mt-4">
+                <BlogCard blog={blog} />
+              </Col>
+            ))}
+          </>
+        )
+      default:
+        return <div>Unknown state</div>
     }
   }
 
   return (
-    <Container>
+    <SmallContainer>
       <Helmet>
         <title>Blog | Tobias Zimmermann</title>
         <meta property="og:title" content="Blog | Tobias Zimmermann" />
         <meta property="og:description" content="Tobias Zimmermann's blogs" />
       </Helmet>
       <Row>
-        <Col md="6" className="m-auto">
+        <Col md="8" className="m-auto">
           <Form.Group controlId="search-blogs">
             <Form.Control
               type="search"
@@ -81,8 +76,8 @@ function BlogFinder() {
           )}
         </Col>
       </Row>
-      <Row className="mt-3">{displayBlogs()}</Row>
-    </Container>
+      <Row>{displayBlogs()}</Row>
+    </SmallContainer>
   )
 }
 

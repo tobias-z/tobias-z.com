@@ -26,4 +26,4 @@ async function fetchRandomData(url: string, method: HttpMethods, body?: any) {
   return handleHttpErrors(res)
 }
 
-export {fetchRandomData}
+export {fetchRandomData, handleHttpErrors}

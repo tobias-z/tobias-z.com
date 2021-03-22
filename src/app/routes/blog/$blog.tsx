@@ -1,57 +1,60 @@
-import * as React from "react"
-import type {BlogType} from "../types"
-import {fetchRandomData} from "../../../api/utils"
-import {blogURL} from "../../../api/blog"
 import {useParams} from "react-router-dom"
-import {Col, Container, Row} from "react-bootstrap"
+import {Col, Row} from "react-bootstrap"
 import {Helmet} from "react-helmet"
+import useBlog from "../../../api/useBlog"
 import MDEditor from "@uiw/react-md-editor"
+import SmallContainer from "../../../components/small-container"
 
 type ParamTypes = {
   title: string
 }
 
 function Blog() {
-  const [blog, setBlog] = React.useState<BlogType>()
   const {title} = useParams<ParamTypes>()
-
-  React.useEffect(() => {
-    fetchRandomData(blogURL.byTitle(title), "GET")
-      .then((data: BlogType) => setBlog(data))
-      .catch(err => console.error(err))
-  }, [title])
+  const {data, status, error} = useBlog(title)
 
   function displayBlog() {
-    if (!blog) {
-      return <div>Loading blog...</div>
-    } else {
-      return (
-        <div>
-          <MDEditor.Markdown source={blog.body} />
-        </div>
-      )
+    switch (status) {
+      case "idle":
+        return <div>Idle</div>
+      case "loading":
+        return <h3 className="text-center">Loading blog...</h3>
+      case "error":
+        return <h3>Error: {error}</h3>
+      case "success":
+        if (!data) return <div>No blog found</div>
+        return (
+          <div>
+            <MDEditor.Markdown source={data.body} />
+            <hr />
+            <div className="text-muted d-flex flex-column align-items-end">
+              <p>{data.createdAt}</p>
+              <p>{data.description}</p>
+            </div>
+          </div>
+        )
+      default:
+        return <div>Unknown state</div>
     }
   }
 
   return (
-    <Container>
+    <SmallContainer>
       <Helmet>
-        <title>{blog ? blog.title : "Blog | Tobias Zimmermann"}</title>
+        <title>{data ? data.title : "Blog | Tobias Zimmermann"}</title>
         <meta
           property="og:title"
-          content={blog ? blog.title : "Blog | Tobias Zimmermann"}
+          content={data ? data.title : "Blog | Tobias Zimmermann"}
         />
         <meta
           property="og:description"
-          content={blog ? blog.description : "Custom blog created for stuff"}
+          content={data ? data.description : "Custom blog created for stuff"}
         />
       </Helmet>
       <Row>
-        <Col md="8" className="m-auto">
-          {displayBlog()}
-        </Col>
+        <Col>{displayBlog()}</Col>
       </Row>
-    </Container>
+    </SmallContainer>
   )
 }
 

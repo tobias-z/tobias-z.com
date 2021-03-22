@@ -4,6 +4,7 @@ import "./scss/compiled/index.min.css"
 import "./scss/compiled/layout.min.css"
 import AppProvider from "./app-provider"
 import {useUser} from "./domain/user/user-provider"
+import {QueryClient, QueryClientProvider} from "react-query"
 
 ReactDOM.render(
   <AppProvider>
@@ -20,9 +21,13 @@ function App() {
     () => import("./app/unauthenticated-app")
   )
 
+  const queryClient = new QueryClient()
+
   return (
     <React.Suspense fallback={<div>full page spinner</div>}>
-      {user.email ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+      <QueryClientProvider client={queryClient}>
+        {user.email ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+      </QueryClientProvider>
     </React.Suspense>
   )
 }

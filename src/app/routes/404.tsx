@@ -1,9 +1,10 @@
 import {Container, Row} from "react-bootstrap"
 import {Helmet} from "react-helmet"
+import SmallContainer from "../../components/small-container"
 
 function UnknownRoute() {
   return (
-    <Container>
+    <SmallContainer>
       <Helmet>
         <title>404 | Tobias Zimmermann</title>
         <meta property="og:title" content="404 | Tobias Zimmermann" />
@@ -16,7 +17,7 @@ function UnknownRoute() {
           <strong>404</strong>: Unknown page
         </h1>
       </Row>
-    </Container>
+    </SmallContainer>
   )
 }
 

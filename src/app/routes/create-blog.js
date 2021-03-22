@@ -2,13 +2,22 @@ import * as React from "react"
 import {Button, Col, Container, Form, Row} from "react-bootstrap"
 import MDEditor from "@uiw/react-md-editor"
 import {Helmet} from "react-helmet"
-import {fetchRandomData} from "../../api/utils"
-import {blogURL} from "../../api/blog"
+import useCreateBlog from "../../api/useCreateBlog"
 
 function CreateBlog() {
   const [title, setTitle] = React.useState("")
   const [description, setDescription] = React.useState("")
   const [blog, setBlog] = React.useState("# Your blog")
+  const [errorMessage, setErrorMessage] = React.useState("")
+  const {mutate, error, isLoading} = useCreateBlog()
+  console.log(error)
+
+  React.useEffect(() => {
+    if (!error) return
+    error.fullError.then(err => {
+      setErrorMessage(`${err.code}: ${err.message}`)
+    })
+  }, [error])
 
   return (
     <Container>
@@ -19,6 +28,7 @@ function CreateBlog() {
       </Helmet>
       <Row>
         <Col>
+          {errorMessage && <h3 className="text-danger">{errorMessage}</h3>}
           <Form.Group controlId="blog-title">
             <Form.Control
               name="title"
@@ -39,7 +49,7 @@ function CreateBlog() {
       </Row>
       <Row>
         <Col>
-          <MDEditor value={blog} onChange={setBlog} />
+          <MDEditor value={blog} onChange={setBlog} height="500" />
         </Col>
       </Row>
       <Row className="my-4">
@@ -54,17 +64,10 @@ function CreateBlog() {
                 description,
                 body: blog,
               }
-              fetchRandomData(blogURL.base, "POST", requestBody)
-                .then(data => console.log(data))
-                .catch(err => console.error(err))
+              mutate(requestBody)
             }}>
-            Create Blog
+            {isLoading ? "Creating your blog..." : "Create Blog"}
           </Button>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <MDEditor.Markdown source={blog} />
         </Col>
       </Row>
     </Container>

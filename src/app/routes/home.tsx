@@ -1,10 +1,11 @@
 import * as React from "react"
-import {Button, Container, Row} from "react-bootstrap"
+import {Button, Row} from "react-bootstrap"
 import {Helmet} from "react-helmet"
+import SmallContainer from "../../components/small-container"
 
 function Home() {
   return (
-    <Container>
+    <SmallContainer>
       <Helmet>
         <title>Home | Tobias Zimmermann</title>
         <meta property="og:title" content="Home | Tobias Zimmermann" />
@@ -13,7 +14,7 @@ function Home() {
       <Row>
         <Button block>Hello</Button>Welcome to my page 🙂
       </Row>
-    </Container>
+    </SmallContainer>
   )
 }
 
