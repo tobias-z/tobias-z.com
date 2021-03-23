@@ -9,4 +9,12 @@ type Options = {
   body?: any
 }
 
-export type {HttpMethods, Options}
+type ApiError = {
+  status: number
+  fullError: () => Promise<{
+    code: string
+    message: string
+  }>
+}
+
+export type {HttpMethods, Options, ApiError}

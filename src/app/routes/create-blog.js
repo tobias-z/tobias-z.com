@@ -3,14 +3,14 @@ import {Button, Col, Container, Form, Row} from "react-bootstrap"
 import MDEditor from "@uiw/react-md-editor"
 import {Helmet} from "react-helmet"
 import useCreateBlog from "../../api/useCreateBlog"
+import useLocalStorageState from "../../customhooks/use-local-storage-state"
 
 function CreateBlog() {
   const [title, setTitle] = React.useState("")
   const [description, setDescription] = React.useState("")
-  const [blog, setBlog] = React.useState("# Your blog")
+  const [blog, setBlog] = useLocalStorageState("create-blog", "# Your blog")
   const [errorMessage, setErrorMessage] = React.useState("")
-  const {mutate, error, isLoading} = useCreateBlog()
-  console.log(error)
+  const {mutate, error, isLoading, isSuccess} = useCreateBlog()
 
   React.useEffect(() => {
     if (!error) return
@@ -19,6 +19,14 @@ function CreateBlog() {
     })
   }, [error])
 
+  React.useEffect(() => {
+    if (isSuccess) {
+      setBlog("# Your blog")
+      setTitle("")
+      setDescription("")
+    }
+  }, [isSuccess, setBlog])
+
   return (
     <Container>
       <Helmet>
@@ -26,6 +34,15 @@ function CreateBlog() {
         <meta property="og:title" content="Create Blog | Tobias Zimmermann" />
         <meta property="og:description" content="Create a blog" />
       </Helmet>
+      {isSuccess && (
+        <Row>
+          <Col>
+            <h3 className="text-success">
+              Success! Your blog has been created 🎉
+            </h3>
+          </Col>
+        </Row>
+      )}
       <Row>
         <Col>
           {errorMessage && <h3 className="text-danger">{errorMessage}</h3>}
@@ -49,7 +66,7 @@ function CreateBlog() {
       </Row>
       <Row>
         <Col>
-          <MDEditor value={blog} onChange={setBlog} height="500" />
+          <MDEditor value={blog} onChange={setBlog} height={500} />
         </Col>
       </Row>
       <Row className="my-4">

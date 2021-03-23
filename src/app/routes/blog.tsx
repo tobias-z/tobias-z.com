@@ -1,5 +1,5 @@
 import * as React from "react"
-import {Button, Col, Container, Form, Row} from "react-bootstrap"
+import {Button, Col, Form, Row} from "react-bootstrap"
 import {useHistory} from "react-router"
 import {useUser} from "../../domain/user/user-provider"
 import {Helmet} from "react-helmet"
@@ -18,7 +18,9 @@ function BlogFinder() {
   React.useEffect(() => {
     if (!search || !data) return
     setBlogsToShow(
-      data.filter(blog => blog.title.toLowerCase().includes(search))
+      data.filter(blog =>
+        blog.title.toLowerCase().includes(search.toLowerCase())
+      )
     )
   }, [data, search])
 

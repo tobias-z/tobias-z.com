@@ -1,4 +1,4 @@
-import {Container, Row} from "react-bootstrap"
+import {Row} from "react-bootstrap"
 import {Helmet} from "react-helmet"
 import SmallContainer from "../../components/small-container"
 

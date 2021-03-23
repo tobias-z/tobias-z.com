@@ -1,18 +1,17 @@
 import {fetchRandomData} from "./utils"
-import type {BlogType} from "../app/routes/types"
+import {BlogType} from "../app/routes/types"
 import {blogURL} from "./blog"
 import {useQueryClient, useMutation} from "react-query"
 
-
-function useCreateBlog() {
+function useEditBlog() {
   const queryClient = useQueryClient()
 
-  return useMutation<BlogType, Error>(
-    async values => await fetchRandomData(blogURL.base, "POST", values),
+  return useMutation<BlogType, Error, BlogType>(
+    async blog => await fetchRandomData(blogURL.byId(blog.id), "PUT", blog),
     {
       onSuccess: () => queryClient.refetchQueries("app:blogs"),
     }
   )
 }
 
-export default useCreateBlog
+export default useEditBlog

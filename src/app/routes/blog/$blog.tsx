@@ -1,9 +1,13 @@
+import * as React from "react"
 import {useParams} from "react-router-dom"
-import {Col, Row} from "react-bootstrap"
+import {Button, Col, Row} from "react-bootstrap"
 import {Helmet} from "react-helmet"
-import useBlog from "../../../api/useBlog"
+import useBlogs from "../../../api/useBlogs"
 import MDEditor from "@uiw/react-md-editor"
 import SmallContainer from "../../../components/small-container"
+import {BlogType} from "../types"
+import {useUser} from "../../../domain/user/user-provider"
+import useEditBlog from "../../../api/use-edit-blog"
 
 type ParamTypes = {
   title: string
@@ -11,7 +15,57 @@ type ParamTypes = {
 
 function Blog() {
   const {title} = useParams<ParamTypes>()
-  const {data, status, error} = useBlog(title)
+  const {user} = useUser()
+  const {data, status, error} = useBlogs()
+  const [blog, setBlog] = React.useState<BlogType | undefined>()
+  const [updatedBlog, setUpdatedBlog] = React.useState<string | undefined>()
+  const [isEdit, setIsEdit] = React.useState(false)
+  const {mutate, isSuccess, isLoading} = useEditBlog()
+
+  React.useEffect(() => {
+    if (!data) return
+    setBlog(data.find(blog => blog.title === title))
+    if (blog) setUpdatedBlog(blog.body)
+  }, [blog, data, title])
+
+  function calculateDisplayButtons() {
+    return (
+      <div className="mb-3">
+        {isEdit ? (
+          <div className="d-flex">
+            <Button
+              className="mr-2"
+              variant="secondary"
+              onClick={() => setIsEdit(false)}>
+              Exit edit
+            </Button>
+            <Button
+              onClick={() => {
+                if (!blog || !updatedBlog) return
+                const requestBody = {
+                  id: blog.id,
+                  title: blog.title,
+                  description: blog.description,
+                  body: updatedBlog,
+                  createdAt: blog.createdAt,
+                  updatedAt: blog.updatedAt,
+                }
+                mutate(requestBody)
+              }}>
+              {isLoading ? "Updating blog..." : "Save changes"}
+            </Button>
+          </div>
+        ) : (
+          <h5
+            className="text-primary"
+            style={{cursor: "pointer"}}
+            onClick={() => setIsEdit(true)}>
+            Edit blog
+          </h5>
+        )}
+      </div>
+    )
+  }
 
   function displayBlog() {
     switch (status) {
@@ -22,14 +76,26 @@ function Blog() {
       case "error":
         return <h3>Error: {error}</h3>
       case "success":
-        if (!data) return <div>No blog found</div>
+        if (!blog) return <div>No blog found</div>
         return (
           <div>
-            <MDEditor.Markdown source={data.body} />
+            {isSuccess && (
+              <h3 className="text-success">Success! Blog has been edited 🎉</h3>
+            )}
+            {isEdit ? (
+              <MDEditor
+                value={updatedBlog}
+                onChange={setUpdatedBlog}
+                height={500}
+              />
+            ) : (
+              <MDEditor.Markdown source={blog.body} />
+            )}
             <hr />
             <div className="text-muted d-flex flex-column align-items-end">
-              <p>{data.createdAt}</p>
-              <p>{data.description}</p>
+              {user.email && calculateDisplayButtons()}
+              <p>{blog.createdAt}</p>
+              <p>{blog.description}</p>
             </div>
           </div>
         )
@@ -41,14 +107,14 @@ function Blog() {
   return (
     <SmallContainer>
       <Helmet>
-        <title>{data ? data.title : "Blog | Tobias Zimmermann"}</title>
+        <title>{blog ? blog.title : "Blog | Tobias Zimmermann"}</title>
         <meta
           property="og:title"
-          content={data ? data.title : "Blog | Tobias Zimmermann"}
+          content={blog ? blog.title : "Blog | Tobias Zimmermann"}
         />
         <meta
           property="og:description"
-          content={data ? data.description : "Custom blog created for stuff"}
+          content={blog ? blog.description : "Custom blog created for stuff"}
         />
       </Helmet>
       <Row>
