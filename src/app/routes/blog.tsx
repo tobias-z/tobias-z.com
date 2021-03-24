@@ -4,16 +4,16 @@ import {Button, Col, Form, Row} from "react-bootstrap"
 import {useUser} from "../../domain/user/user-provider"
 import {Helmet} from "react-helmet"
 import BlogCard from "../../components/blog-card"
-import useBlogs from "../../api/useBlogs"
+import useNoBlogs from "../../api/use-no-blogs"
 import SmallContainer from "../../components/small-container"
-import {BlogType} from "./types"
+import {NoBlog} from "../../api/types"
 
 function BlogFinder() {
   const history = useHistory()
   const {user} = useUser()
   const [search, setSearch] = React.useState("")
-  const [blogsToShow, setBlogsToShow] = React.useState<Array<BlogType>>([])
-  const {data, status, error} = useBlogs()
+  const [blogsToShow, setBlogsToShow] = React.useState<Array<NoBlog>>([])
+  const {data, status, error} = useNoBlogs()
 
   React.useEffect(() => {
     if (!search || !data) return

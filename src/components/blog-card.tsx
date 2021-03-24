@@ -1,13 +1,13 @@
 import * as React from "react"
 import {Button, Card} from "react-bootstrap"
 import {useHistory} from "react-router"
-import type {BlogType} from "../app/routes/types"
 import {CopyToClipboard} from "react-copy-to-clipboard"
 import {useUser} from "../domain/user/user-provider"
 import useDeleteBlog from "../api/useDeleteBlog"
+import {NoBlog} from "../api/types"
 
 type Props = {
-  blog: BlogType
+  blog: NoBlog
 }
 
 const BlogCard = React.memo(({blog}: Props) => {

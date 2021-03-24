@@ -2,12 +2,11 @@ import * as React from "react"
 import {useParams} from "react-router-dom"
 import {Button, Col, Row} from "react-bootstrap"
 import {Helmet} from "react-helmet"
-import useBlogs from "../../../api/useBlogs"
 import MDEditor from "@uiw/react-md-editor"
 import SmallContainer from "../../../components/small-container"
-import {BlogType} from "../types"
 import {useUser} from "../../../domain/user/user-provider"
 import useEditBlog from "../../../api/use-edit-blog"
+import useBlog from "../../../api/useBlog"
 
 type ParamTypes = {
   title: string
@@ -16,17 +15,14 @@ type ParamTypes = {
 function Blog() {
   const {title} = useParams<ParamTypes>()
   const {user} = useUser()
-  const {data, status, error} = useBlogs()
-  const [blog, setBlog] = React.useState<BlogType | undefined>()
+  const {data: blog, status, error} = useBlog(title)
   const [updatedBlog, setUpdatedBlog] = React.useState<string | undefined>()
   const [isEdit, setIsEdit] = React.useState(false)
   const {mutate, isSuccess, isLoading} = useEditBlog()
 
   React.useEffect(() => {
-    if (!data) return
-    setBlog(data.find(blog => blog.title === title))
     if (blog) setUpdatedBlog(blog.body)
-  }, [blog, data, title])
+  }, [blog])
 
   function calculateDisplayButtons() {
     return (

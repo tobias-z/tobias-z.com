@@ -3,11 +3,11 @@ import type {ErrorResponse, NoBlog} from "./types"
 import {blogURL} from "./blog"
 import {useQuery} from "react-query"
 
-function useBlogs() {
+function useNoBlogs() {
   return useQuery<Array<NoBlog>, ErrorResponse>("app:noblogs", async () => {
-    const data = await fetchRandomData(blogURL.base + "/noblogs", "GET")
+    const data = await fetchRandomData(blogURL.withNoBlog, "GET")
     return data.all
   })
 }
 
-export default useBlogs
+export default useNoBlogs
