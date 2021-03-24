@@ -15,9 +15,9 @@ type ParamTypes = {
 function Blog() {
   const {title} = useParams<ParamTypes>()
   const {user} = useUser()
-  const {data: blog, status, error} = useBlog(title)
   const [updatedBlog, setUpdatedBlog] = React.useState<string | undefined>()
   const [isEdit, setIsEdit] = React.useState(false)
+  const {data: blog, status, error} = useBlog(title)
   const {mutate, isSuccess, isLoading} = useEditBlog()
 
   React.useEffect(() => {
