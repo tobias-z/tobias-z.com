@@ -1,6 +1,6 @@
 import * as React from "react"
-import {Button, Col, Form, Row} from "react-bootstrap"
 import {useHistory} from "react-router"
+import {Button, Col, Form, Row} from "react-bootstrap"
 import {useUser} from "../../domain/user/user-provider"
 import {Helmet} from "react-helmet"
 import BlogCard from "../../components/blog-card"
@@ -52,12 +52,12 @@ function BlogFinder() {
 
   return (
     <SmallContainer>
-      <Helmet>
-        <title>Blog | Tobias Zimmermann</title>
-        <meta property="og:title" content="Blog | Tobias Zimmermann" />
-        <meta property="og:description" content="Tobias Zimmermann's blogs" />
-      </Helmet>
       <Row>
+        <Helmet>
+          <title>Blog | Tobias Zimmermann</title>
+          <meta property="og:title" content="Blog | Tobias Zimmermann" />
+          <meta property="og:description" content="Tobias Zimmermann's blogs" />
+        </Helmet>
         <Col md="8" className="m-auto">
           <Form.Group controlId="search-blogs">
             <Form.Control

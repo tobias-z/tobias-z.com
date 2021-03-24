@@ -56,8 +56,8 @@ function CreateBlog() {
           </Form.Group>
           <Form.Group controlId="blog-description">
             <Form.Control
-              name="description"
               value={description}
+              name="description"
               onChange={e => setDescription(e.target.value)}
               placeholder="Description"
             />
@@ -66,7 +66,11 @@ function CreateBlog() {
       </Row>
       <Row>
         <Col>
-          <MDEditor value={blog} onChange={setBlog} height={500} />
+          <MDEditor
+            value={blog as string}
+            onChange={setBlog as React.Dispatch<string | undefined>}
+            height={500}
+          />
         </Col>
       </Row>
       <Row className="my-4">

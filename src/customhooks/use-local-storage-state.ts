@@ -9,7 +9,7 @@ function useLocalStorageState(
     try {
       value = window.localStorage.getItem(storageKey || initialState)
     } catch (error) {
-      value = initialState
+      // Ignore
     }
     return value
   })

@@ -9,12 +9,20 @@ type Options = {
   body?: any
 }
 
-type ApiError = {
-  status: number
-  fullError: () => Promise<{
-    code: string
-    message: string
-  }>
+type StatusError = {
+  code: number
+  message: string
 }
 
-export type {HttpMethods, Options, ApiError}
+type ErrorResponse = {
+  status: number
+  fullError: Promise<StatusError>
+}
+
+type NoBlog = {
+  id: number
+  title: string
+  description: string
+}
+
+export type {HttpMethods, Options, ErrorResponse, NoBlog}

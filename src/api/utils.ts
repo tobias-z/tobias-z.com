@@ -25,5 +25,4 @@ async function fetchRandomData(url: string, method: HttpMethods, body?: any) {
   const res = await fetch(url, method && makeOptions(method, body))
   return handleHttpErrors(res)
 }
-
 export {fetchRandomData, handleHttpErrors}
