@@ -1,8 +1,14 @@
-import { useField } from "formik"
-import React from "react"
-import { Form } from "react-bootstrap"
+import {useField} from "formik"
+import {Form} from "react-bootstrap"
 
-function MySelect({ size, options, label, ...props }) {
+type Props = {
+  name: string
+  options: Array<string>
+  label?: string
+  size?: "lg" | "sm"
+}
+
+function MySelect({options, label, ...props}: Props) {
   const [field] = useField(props)
 
   function generateOptions() {
@@ -12,7 +18,7 @@ function MySelect({ size, options, label, ...props }) {
   return (
     <Form.Group controlId={field.name}>
       {label && <Form.Label>{label}</Form.Label>}
-      <Form.Control {...field} {...props} as="select" size={size && size}>
+      <Form.Control {...field} {...props} as="select">
         {generateOptions()}
       </Form.Control>
     </Form.Group>

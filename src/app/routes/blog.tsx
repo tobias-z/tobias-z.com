@@ -1,24 +1,24 @@
 import * as React from "react"
-import {useHistory} from "react-router"
+import {Helmet} from "react-helmet"
+import {useHistory} from "react-router-dom"
 import {Button, Col, Form, Row} from "react-bootstrap"
 import {useUser} from "../../domain/user/user-provider"
-import {Helmet} from "react-helmet"
 import BlogCard from "../../components/blog-card"
 import useNoBlogs from "../../api/use-no-blogs"
 import SmallContainer from "../../components/small-container"
-import {NoBlog} from "../../api/types"
+import {NoBlogs} from "../../api/types"
 
 function BlogFinder() {
   const history = useHistory()
   const {user} = useUser()
   const [search, setSearch] = React.useState("")
-  const [blogsToShow, setBlogsToShow] = React.useState<Array<NoBlog>>([])
+  const [blogsToShow, setBlogsToShow] = React.useState<Array<NoBlogs>>([])
   const {data, status, error} = useNoBlogs()
 
   React.useEffect(() => {
     if (!search || !data) return
     setBlogsToShow(
-      data.filter(blog =>
+      data.all.filter(blog =>
         blog.title.toLowerCase().includes(search.toLowerCase())
       )
     )
@@ -32,10 +32,10 @@ function BlogFinder() {
         return <h3 className="text-center">Loading blogs...</h3>
       case "error":
         return <h3>Error: {error}</h3>
-      case "success":
+      case "success": {
         console.log(data)
         if (!data) return <div>No blogs found</div>
-        const arrayToMap = search ? blogsToShow : data
+        const arrayToMap = search ? blogsToShow : data.all
         return (
           <>
             {arrayToMap.map(blog => (
@@ -45,6 +45,7 @@ function BlogFinder() {
             ))}
           </>
         )
+      }
       default:
         return <div>Unknown state</div>
     }

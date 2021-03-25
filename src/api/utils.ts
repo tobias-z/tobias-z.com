@@ -1,17 +1,8 @@
-import type {HttpMethods, Options} from "./types"
-
-function makeOptions(method: HttpMethods, body: any) {
-  let opts: Options = {
-    method: method,
-    headers: {
-      "Content-type": "application/json",
-      Accept: "application/json",
-    },
+function makeHeaders() {
+  return {
+    "Content-type": "application/json",
+    Accept: "application/json",
   }
-  if (body) {
-    opts.body = JSON.stringify(body)
-  }
-  return opts
 }
 
 function handleHttpErrors(res: Response) {
@@ -21,8 +12,4 @@ function handleHttpErrors(res: Response) {
   return res.json()
 }
 
-async function fetchRandomData(url: string, method: HttpMethods, body?: any) {
-  const res = await fetch(url, method && makeOptions(method, body))
-  return handleHttpErrors(res)
-}
-export {fetchRandomData, handleHttpErrors}
+export {handleHttpErrors, makeHeaders}

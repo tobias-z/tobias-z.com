@@ -1,15 +1,14 @@
 import * as React from "react"
+import {Formik, Form} from "formik"
+import {Link, useHistory} from "react-router-dom"
 import {Button, Spinner} from "react-bootstrap"
-import {useHistory} from "react-router"
+import * as yup from "yup"
+import {Helmet} from "react-helmet"
 import {useAuth} from "../../domain/user/auth-provider"
 import {useUser} from "../../domain/user/user-provider"
-import {Formik, Form} from "formik"
 import MyInput from "../../components/form/my-input"
 import CenteredContainer from "../../components/centered-container"
 import OutlinedContainer from "../../components/outlined-container"
-import * as yup from "yup"
-import {Link} from "react-router-dom"
-import {Helmet} from "react-helmet"
 
 function Login() {
   const {login} = useAuth()

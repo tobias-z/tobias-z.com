@@ -6,7 +6,7 @@ type InputProps = {
   label?: string
   text?: string
   placeholder?: string
-  type?: "email" | "password" | "text" | "number" | "search"
+  type?: "email" | "number" | "password" | "search" | "text"
   autoFocus?: boolean
 }
 

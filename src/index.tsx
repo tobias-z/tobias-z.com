@@ -2,9 +2,9 @@ import * as React from "react"
 import "./scss/compiled/index.min.css"
 import ReactDOM from "react-dom"
 import "./scss/compiled/layout.min.css"
+import {QueryClient, QueryClientProvider} from "react-query"
 import AppProvider from "./app-provider"
 import {useUser} from "./domain/user/user-provider"
-import {QueryClient, QueryClientProvider} from "react-query"
 import ErrorBoundary from "./ErrorBoundary"
 
 ReactDOM.render(

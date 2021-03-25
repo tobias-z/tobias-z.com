@@ -1,21 +1,21 @@
 import * as React from "react"
 
-function useLocalStorageState(
+function useLocalStorageState<S>(
   storageKey: string,
-  initialState: any
-): [any, React.Dispatch<any>] {
-  const [state, setState] = React.useState(() => {
-    let value: any
+  initialState: S
+): [S, React.Dispatch<React.SetStateAction<S>>] {
+  const [state, setState] = React.useState<S>(() => {
+    let value: S
     try {
-      value = window.localStorage.getItem(storageKey || initialState)
-    } catch (error) {
-      // Ignore
+      value = JSON.parse(window.localStorage.getItem(storageKey) ?? "")
+    } catch (error: unknown) {
+      value = initialState
     }
     return value
   })
 
   React.useEffect(() => {
-    window.localStorage.setItem(storageKey, state)
+    window.localStorage.setItem(storageKey, JSON.stringify(state))
   }, [initialState, state, storageKey])
 
   return [state, setState]

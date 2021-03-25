@@ -1,10 +1,10 @@
 import {Route, BrowserRouter as Router, Switch} from "react-router-dom"
 import Footer from "../components/footer"
+import Header from "../components/authenticated/header"
 import Home from "./routes/home"
 import UnknownRoute from "./routes/404"
 import BlogFinder from "./routes/blog"
 import CreateBlog from "./routes/create-blog"
-import Header from "../components/authenticated/header"
 import Layout from "./layout"
 import Blog from "./routes/blog/$blog"
 

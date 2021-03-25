@@ -7,4 +7,8 @@ type BlogType = {
   updatedAt: string
 }
 
-export type {BlogType}
+type Blogs = {
+  all: Array<BlogType>
+}
+
+export type {BlogType, Blogs}

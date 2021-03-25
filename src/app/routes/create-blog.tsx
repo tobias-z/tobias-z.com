@@ -8,13 +8,16 @@ import useLocalStorageState from "../../customhooks/use-local-storage-state"
 function CreateBlog() {
   const [title, setTitle] = React.useState("")
   const [description, setDescription] = React.useState("")
-  const [blog, setBlog] = useLocalStorageState("create-blog", "# Your blog")
+  const [blog, setBlog] = useLocalStorageState<string>(
+    "create-blog",
+    "# Your blog"
+  )
   const [errorMessage, setErrorMessage] = React.useState("")
   const {mutate, error, isLoading, isSuccess} = useCreateBlog()
 
   React.useEffect(() => {
     if (!error) return
-    error.fullError.then(err => {
+    void error.fullError.then(err => {
       setErrorMessage(`${err.code}: ${err.message}`)
     })
   }, [error])
@@ -38,7 +41,10 @@ function CreateBlog() {
         <Row>
           <Col>
             <h3 className="text-success">
-              Success! Your blog has been created 🎉
+              Success! Your blog has been created{" "}
+              <span role="img" aria-label="YAY">
+                🎉
+              </span>
             </h3>
           </Col>
         </Row>
@@ -67,7 +73,7 @@ function CreateBlog() {
       <Row>
         <Col>
           <MDEditor
-            value={blog as string}
+            value={blog}
             onChange={setBlog as React.Dispatch<string | undefined>}
             height={500}
           />

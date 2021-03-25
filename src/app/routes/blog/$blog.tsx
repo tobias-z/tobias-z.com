@@ -76,7 +76,12 @@ function Blog() {
         return (
           <div>
             {isSuccess && (
-              <h3 className="text-success">Success! Blog has been edited 🎉</h3>
+              <h3 className="text-success">
+                Success! Blog has been edited{" "}
+                <span role="img" aria-label="YAY">
+                  🎉
+                </span>
+              </h3>
             )}
             {isEdit ? (
               <MDEditor

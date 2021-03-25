@@ -9,7 +9,7 @@ function MyRadio(props) {
     <Form.Check
       type="radio"
       isInvalid={errorText}
-      id={"radio-label-" + field.value + Math.random()}
+      id={`radio-label-${field.value}${Math.random()}`}
       {...field}
       {...props}
     />

@@ -9,7 +9,7 @@ const userInitialState = {
   lastName: "",
 }
 
-function UserProvider({children}: any) {
+function UserProvider({children}: {children: React.ReactNode}) {
   const [user, setUser] = React.useState<UserInfo>(userInitialState)
   const values = React.useMemo(
     () => ({

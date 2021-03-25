@@ -1,5 +1,4 @@
 import {useField} from "formik"
-import * as React from "react"
 import {Form, FormControl} from "react-bootstrap"
 import {FormCheckType} from "react-bootstrap/esm/FormCheck"
 

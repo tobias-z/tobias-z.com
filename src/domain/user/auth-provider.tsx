@@ -1,12 +1,12 @@
 import * as React from "react"
+import mockDBAuthorize from "../../mockdb/users"
 import type {AuthCalls, LoginProps, RegisterProps} from "./types"
 import {userInitialState, useUser} from "./user-provider"
-import mockDBAuthorize from "../../mockdb/users"
 import {UserInfo} from "./types"
 
 const AuthContext = React.createContext<AuthCalls | undefined>(undefined)
 
-function AuthProvider({children}: any) {
+function AuthProvider({children}: {children: React.ReactNode}) {
   const {setUser} = useUser()
 
   const login = React.useCallback(async (credentials: LoginProps) => {
@@ -17,13 +17,14 @@ function AuthProvider({children}: any) {
         (u: UserInfo) => u.email === credentials.email
       )
       return user
-    } catch (error) {
+    } catch (error: unknown) {
       return null
     }
   }, [])
 
   const register = React.useCallback(async (userInfo: RegisterProps) => {
     // Do db call to register the user
+    console.log(userInfo)
   }, [])
 
   const logout = React.useCallback(() => {

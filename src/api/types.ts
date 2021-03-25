@@ -1,4 +1,4 @@
-type HttpMethods = "GET" | "POST" | "PUT" | "DELETE"
+type HttpMethods = "DELETE" | "GET" | "POST" | "PUT"
 
 type Options = {
   method: HttpMethods
@@ -6,7 +6,7 @@ type Options = {
     "Content-type": string
     Accept: string
   }
-  body?: any
+  body?: RequestInit
 }
 
 type StatusError = {
@@ -19,10 +19,14 @@ type ErrorResponse = {
   fullError: Promise<StatusError>
 }
 
-type NoBlog = {
+type NoBlogs = {
   id: number
   title: string
   description: string
 }
 
-export type {HttpMethods, Options, ErrorResponse, NoBlog}
+type NoBlog = {
+  all: Array<NoBlogs>
+}
+
+export type {HttpMethods, Options, ErrorResponse, NoBlog, NoBlogs}
