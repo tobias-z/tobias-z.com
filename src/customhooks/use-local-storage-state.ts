@@ -1,11 +1,11 @@
 import * as React from "react"
 
-function useLocalStorageState<S>(
+function useLocalStorageState<T>(
   storageKey: string,
-  initialState: S
-): [S, React.Dispatch<React.SetStateAction<S>>] {
-  const [state, setState] = React.useState<S>(() => {
-    let value: S
+  initialState: T
+): [T, React.Dispatch<React.SetStateAction<T>>] {
+  const [state, setState] = React.useState<T>(() => {
+    let value: T
     try {
       value = JSON.parse(window.localStorage.getItem(storageKey) ?? "")
     } catch (error: unknown) {

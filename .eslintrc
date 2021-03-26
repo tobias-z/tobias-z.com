@@ -1,10 +1,15 @@
 {
-  "extends": ["./node_modules/kcd-scripts/eslint.js"],
+  "extends": [
+    "react-app",
+    "react-app/jest",
+    "./node_modules/kcd-scripts/eslint.js"
+  ],
   "rules": {
     "react/no-unstable-nested-components": "off",
     "react/react-in-jsx-scope": "off",
     "jsx-a11y/click-events-have-key-events": "off",
     "jsx-a11y/no-noninteractive-element-interactions": "off",
-    "react/display-name": "off"
+    "react/display-name": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off"
   }
 }
